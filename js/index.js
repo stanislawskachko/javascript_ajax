@@ -18,7 +18,8 @@ function getHtmlData() {
 document.querySelector('.html .fetch').addEventListener('click', fetchHtmlData);
 function fetchHtmlData() {
     fetch('data.html')
-        .
+        .then( data => data.text() )
+        .then( html => document.querySelector('.html .container').innerHTML = html )
 }
 
 document.querySelector('.json .get').addEventListener('click', getJsonData);
@@ -35,4 +36,16 @@ function getJsonData() {
     }
     xhr.open('GET', 'data.json?r='+Math.random(), true);
     xhr.send();
+}
+
+document.querySelector('.json .fetch').addEventListener('click', fetchJsonData);
+function fetchJsonData() {
+    fetch('data.json')
+        .then( data => data.json() )
+        .then( clientData => {
+            document.querySelector('.json .container .name')
+                .innerText = clientData.name;
+            document.querySelector('.json .container .balance')
+                .innerText = clientData.balance;
+        })
 }
